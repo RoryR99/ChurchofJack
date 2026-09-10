@@ -4,7 +4,7 @@ import { images } from "@/data/church";
 export const metadata: Metadata = {
   title: "The Church of Jack | Look to rest yourself.",
   description:
-    "An entirely unofficial institution. Four sayings. Infinite interpretations. An affectionate parody created by friends of Javan Jack.",
+    "The Church of Jack. Five sayings. Infinite interpretations. Look to rest yourself. Rock Back Heavy.",
 };
 export default function RootLayout({
   children,

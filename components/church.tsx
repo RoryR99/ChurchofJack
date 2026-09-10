@@ -58,12 +58,12 @@ export function Hero() {
         className="hero-art"
         style={{ backgroundImage: `url('${images[0].src}')` }}
         role="img"
-        aria-label="Supplied stylized portrait of Javan Jack in orange robes"
+        aria-label="Portrait of Javan Jack in orange robes"
       />
       <div className="hero-shade" />
       <div className="hero-inner">
         <div className="eyebrow">
-          <span className="line" /> AN ENTIRELY UNOFFICIAL INSTITUTION
+          <span className="line" /> THE SACRED ORDER OF REST
         </div>
         <h1>
           The Church
@@ -74,7 +74,7 @@ export function Hero() {
         <p className="hero-description">
           From Trinidad to the distant lands of Tempe.
           <br />
-          One man. Four sayings. An unreasonable amount of theology.
+          One man. Five sayings. An unreasonable amount of theology.
         </p>
         <div className="hero-actions">
           <a className="button gold" href="#gospel">
@@ -84,12 +84,9 @@ export function Hero() {
             <BookOpen size={17} /> Read the Gospel
           </a>
         </div>
-        <p className="hero-disclaimer">
-          An affectionate parody. The devotion is a joke. The stress is real.
-        </p>
       </div>
       <div className="hero-bottom">
-        <span>ESTABLISHED: SPIRITUALLY, NOT LEGALLY.</span>
+        <span>REST. REPETITION. ROCKING BACK.</span>
         <a href="#gospel">
           SCROLL TO REVELATION <ArrowDown size={15} />
         </a>

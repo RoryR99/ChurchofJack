@@ -18,7 +18,7 @@ Open http://127.0.0.1:3000. `npm run build` creates the production static site i
 - `app/layout.tsx`: site metadata and global layout.
 - `components/church.tsx`: navigation, hero, chapter headings and monogram seal.
 - `components/rituals.tsx`: scripture generator, Restfulness Index, contractual confession, accessible gallery dialog and keyboard Easter eggs.
-- `data/church.ts`: verified Jack facts, the four exact sayings, interpretations, observances and central image configuration.
+- `data/church.ts`: verified Jack facts, the five exact sayings, interpretations, observances and central image configuration.
 - `data/disciples.ts`: typed disciple registry. Add approved names and optional `churchTitle`, `image`, `quote`, `rank`, `description`; entries render automatically. It is intentionally empty.
 - `public/images/`: delivery images, with original JPEG copies retained.
 - `scripts/prepare-images.mjs`: WebP compression from the original JPEGs (run with `node scripts/prepare-images.mjs` when replacing assets).
@@ -26,11 +26,11 @@ Open http://127.0.0.1:3000. `npm run build` creates the production static site i
 
 ## Content guardrails
 
-Only the supplied facts and four sayings are treated as information about Javan. Scripture analysis, titles, bureaucratic rituals and religious framing are fictional. No dates, dating encounters, named friends, additional personal quotes or employer policies have been invented. The images are supplied stylized artwork, not documentation of real events. The footer disclaims religious and employer affiliation.
+Only the supplied facts and five sayings are treated as information about Javan. Scripture analysis, titles, bureaucratic rituals and religious framing are fictional. No dates, dating encounters, named friends, additional personal quotes or employer policies have been invented. The images are supplied stylized artwork, not documentation of real events. The public copy stays in character, without parody or affiliation notices, as requested.
 
 ## Interactions and accessibility
 
-- The Word of Jack uses only the four supplied sayings and selects an interpretation; consecutive quotes differ.
+- The Word of Jack uses only the five supplied sayings and selects an interpretation; consecutive quotes differ.
 - The rest slider supports keyboard arrows, Home and End.
 - The confession is local only; nothing is transmitted or saved.
 - Gallery images open in a native modal dialog with focus containment, focus restoration, Escape, previous/next buttons and arrow keys.

@@ -20,7 +20,7 @@ export function WordOfJack() {
   function receive() {
     setCurrent(
       (previous) =>
-        (previous + 1 + Math.floor(Math.random() * 3)) % sayings.length,
+        (previous + 1 + Math.floor(Math.random() * (sayings.length - 1))) % sayings.length,
     );
     setInterpretation(Math.floor(Math.random() * 2));
     setReceived(true);
@@ -41,7 +41,7 @@ export function WordOfJack() {
         <ArrowUpRight size={17} />
       </button>
       <span className="ritual-note">
-        Four possible revelations. No further clarification guaranteed.
+        {sayings.length} possible revelations. No further clarification guaranteed.
       </span>
     </div>
   );
@@ -103,7 +103,7 @@ export function RestMeter() {
         <p>{stages[index].text}</p>
       </div>
       <p className="fine-print">
-        An entirely unscientific instrument. Slide towards salvation.
+        Slide towards salvation.
       </p>
     </div>
   );
@@ -115,7 +115,7 @@ const sins = [
   ],
   [
     "Skipped the appendix",
-    "Acknowledge the appendix. It has feelings in this fictional theology.",
+    "Acknowledge the appendix. Even the smallest subparagraph deserves devotion.",
   ],
   [
     "Ignored the amendment",
@@ -123,11 +123,11 @@ const sins = [
   ],
   [
     "Forgot the signature",
-    "Sign an imaginary document. Your penance is hereby countersigned.",
+    "Contemplate the sacred signature. Your penance is hereby countersigned.",
   ],
   [
     "Failed to rest yourself",
-    "Put down the imaginary contract. Look to rest yourself.",
+    "Put down the contract. Look to rest yourself.",
   ],
 ];
 export function Confession() {
@@ -144,7 +144,7 @@ export function Confession() {
         >
           <FilePenLine size={24} />
         </button>
-        <span className="eyebrow">FORM C-01 · FICTIONAL CONFESSIONAL</span>
+        <span className="eyebrow">FORM C-01 · CONTRACTUAL CONFESSIONAL</span>
       </div>
       <h3>
         Confess your
@@ -188,7 +188,7 @@ export function Confession() {
           </>
         ) : (
           <p className="fine-print">
-            A fictional ritual. Nothing is submitted or stored.
+            Nothing is submitted or stored.
           </p>
         )}
       </div>

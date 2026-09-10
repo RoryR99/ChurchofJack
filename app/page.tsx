@@ -54,7 +54,7 @@ export default function Home() {
                 than sufficient material for a canon.
               </p>
               <a className="underlined-link" href="#sayings">
-                Explore the four sayings <ArrowDown size={16} />
+                Explore the five sayings <ArrowDown size={16} />
               </a>
             </div>
             <article className="manuscript">
@@ -79,7 +79,7 @@ export default function Home() {
                 way to sitting down.
               </p>
               <footer>
-                JACK 1:1 <span>·</span> PARODY COMMENTARY
+                JACK 1:1 <span>·</span> THE FOUNDATIONAL DOCTRINE
               </footer>
               <span className="page-corner" />
             </article>
@@ -89,7 +89,7 @@ export default function Home() {
           <div className="container">
             <div className="section-heading">
               <div>
-                <Chapter number="02">THE FOUR SAYINGS</Chapter>
+                <Chapter number="02">THE FIVE SAYINGS</Chapter>
                 <h2>
                   A small canon.
                   <br />
@@ -197,7 +197,7 @@ export default function Home() {
                 <span>
                   {jack.name}
                   <strong>{jack.job}</strong>
-                  <small>An actual job. A fictional testament.</small>
+                  <small>The Book of Clauses.</small>
                 </span>
               </div>
             </div>
@@ -257,10 +257,6 @@ export default function Home() {
                 While the disciples remain in Trinidad,
                 <br />
                 the Jack dwells in Tempe, Arizona.
-                <br />
-                <span className="fine-print">
-                  “Exile” is our dramatic choice of word.
-                </span>
               </p>
             </div>
             <div className="route-diagram">
@@ -291,7 +287,7 @@ export default function Home() {
                 <p>Same Jack. Different landscape.</p>
               </div>
               <span className="route-caption">
-                A SYMBOLIC ROUTE · NOT A TRAVEL RECORD
+                FROM THE DISCIPLES TO HIS RESTFULNESS
               </span>
             </div>
             <div id="disciples" className="disciples">
@@ -371,7 +367,7 @@ export default function Home() {
               </p>
               <p className="body-copy">
                 Whether this conflicts with the Maritime Doctrine has been
-                referred to an entirely fictional committee.
+                referred to the Committee on Illustrated Doctrine.
               </p>
               <div className="manga-tags">
                 <span>ANIME</span>
@@ -391,7 +387,7 @@ export default function Home() {
                 </h2>
               </div>
               <p>
-                A collection of supplied, stylized images.
+                Images preserved in the sacred archives.
                 <br />
                 Artistic reverence. Questionable restraint.
               </p>
@@ -414,7 +410,7 @@ export default function Home() {
               </p>
               <p className="body-copy">
                 Move the Restfulness Index to discover your current standing
-                with a completely imaginary institution.
+                with the Church.
               </p>
               <div className="rest-seal">
                 <Seal />
@@ -494,14 +490,8 @@ export default function Home() {
             </nav>
           </div>
           <div className="footer-bottom">
-            <p>
-              This website is a parody created by friends. It is not a real
-              religious organization and is not affiliated with MSC or any other
-              employer or organization referenced herein.
-            </p>
+            <p>Look to rest yourself. Rock Back Heavy.</p>
             <span>
-              Established: spiritually, not legally.
-              <br />
               Made with affection. And far too much ceremony.
             </span>
           </div>

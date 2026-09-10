@@ -1,0 +1,109 @@
+// All biographical content comes from the supplied brief. Religious commentary is fiction.
+export const jack = {
+  name: "Javan Jack",
+  home: "Trinidad & Tobago",
+  residence: "Tempe, Arizona",
+  job: "Contracts Specialist at MSC Shipping",
+  interests: ["Anime", "Manga", "Chainsaw Man"],
+  stresses: ["Girls", "Work"],
+};
+export const sayings = [
+  {
+    numeral: "I",
+    title: "The Commandment of Rest",
+    quote: "Look to rest yourself.",
+    theme: "Rest",
+    interpretations: [
+      "The foundational doctrine: enough is enough. Even if the contract has an appendix.",
+      "A universal instruction, awaiting implementation by the man stressed about girls and work.",
+    ],
+  },
+  {
+    numeral: "II",
+    title: "The Request for Repetition",
+    quote: "Répétez s'il vous plaît.",
+    theme: "Repetition",
+    interpretations: [
+      "The same uncertainty, now with international standing.",
+      "The Church’s French-language department consists entirely of this sentence.",
+    ],
+  },
+  {
+    numeral: "III",
+    title: "The Second Request",
+    quote: "Say that again please.",
+    theme: "Revelation",
+    interpretations: [
+      "For those who missed the first revelation. And the French one.",
+      "Understanding is optional. Requesting another explanation is a sacred right.",
+    ],
+  },
+  {
+    numeral: "IV",
+    title: "The Final Inquiry",
+    quote: "What.",
+    theme: "Mystery",
+    interpretations: [
+      "One word. A full stop. Absolutely no resolution. Our fictional scholars remain divided.",
+      "The point at which theology and a very long working day become indistinguishable.",
+    ],
+  },
+] as const;
+export const images = [
+  {
+    src: "/images/jack-robed.webp",
+    title: "His Restfulness",
+    subtitle: "The Jack, as imagined.",
+    alt: "Supplied stylized portrait of Jack in orange robes holding a black bowl",
+    width: 704,
+    height: 1524,
+    position: "center 47%",
+  },
+  {
+    src: "/images/jack-cosmic.webp",
+    title: "A higher understanding",
+    subtitle: "An image preserved by the disciples.",
+    alt: "Supplied cosmic portrait of Jack surrounded by stars and geometric patterns",
+    width: 704,
+    height: 1524,
+    position: "center 60%",
+  },
+  {
+    src: "/images/jack-ascended.webp",
+    title: "Beyond comprehension",
+    subtitle: "The archive offers no explanation.",
+    alt: "Supplied fantastical portrait of Jack with an elongated head against a cosmic background",
+    width: 704,
+    height: 1524,
+    position: "center 43%",
+  },
+  {
+    src: "/images/church-moodboard.webp",
+    title: "The visual canon",
+    subtitle: "From the Church’s supplied collection.",
+    alt: "Supplied Church of Jack design collage with gold insignia, bowls, and temple imagery",
+    width: 704,
+    height: 1524,
+    position: "center 40%",
+  },
+];
+export const observances = [
+  {
+    numeral: "01",
+    title: "The Daily Rest",
+    when: "Whenever one has done enough.",
+    note: "No booking required. No evidence of productivity requested.",
+  },
+  {
+    numeral: "02",
+    title: "The Repetition",
+    when: "Whenever Jack says “Say that again please.”",
+    note: "An observance so important it may be observed twice.",
+  },
+  {
+    numeral: "03",
+    title: "The Great What",
+    when: "Whenever the situation becomes incomprehensible.",
+    note: "The congregation is invited to share in the confusion.",
+  },
+];

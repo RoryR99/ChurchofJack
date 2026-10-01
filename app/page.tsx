@@ -3,7 +3,7 @@ import {
   ArrowUpRight,
   Anchor,
   BookOpen,
-  Heart,
+  UtensilsCrossed,
   Plus,
   Sparkles,
 } from "lucide-react";
@@ -54,7 +54,7 @@ export default function Home() {
                 than sufficient material for a canon.
               </p>
               <a className="underlined-link" href="#sayings">
-                Explore the five sayings <ArrowDown size={16} />
+                Explore the sayings <ArrowDown size={16} />
               </a>
             </div>
             <article className="manuscript">
@@ -89,7 +89,7 @@ export default function Home() {
           <div className="container">
             <div className="section-heading">
               <div>
-                <Chapter number="02">THE FIVE SAYINGS</Chapter>
+                <Chapter number="02">THE {sayings.length} SAYINGS</Chapter>
                 <h2>
                   A small canon.
                   <br />
@@ -133,41 +133,35 @@ export default function Home() {
                 <div className="paradox-orbit orbit-one" />
                 <div className="paradox-orbit orbit-two" />
                 <div className="paradox-symbol">
-                  <Heart size={44} strokeWidth={1} />
-                  <span>DESIRE</span>
+                  <UtensilsCrossed size={44} strokeWidth={1} />
+                  <span>FEAST</span>
                   <div className="paradox-axis" />
-                  <span>FEAR</span>
+                  <span>REST</span>
                   <span className="what-symbol">?</span>
                 </div>
                 <span className="diagram-label">
-                  FIG. I — AN UNRESOLVED MATTER
+                  FIG. I — THE CIRCLE OF LUNCH
                 </span>
               </div>
               <div>
-                <Chapter number="03">THE GREAT CONTRADICTION</Chapter>
+                <Chapter number="03">THE GOSPEL OF SECOND HELPINGS</Chapter>
                 <h2>
-                  Desire.
+                  Eat.
                   <br />
-                  Fear.
+                  Rest.
                   <br />
                   <em>Repeat.</em>
                 </h2>
                 <p className="body-copy">
-                  Jack is fascinated by Asian women. Jack is also intimidated by
-                  Asian women. The Church has considered both statements and
-                  would like a moment.
+                  The Church recognizes three essential food groups:
+                  the first plate, the second plate, and a little something for later.
                 </p>
                 <div className="paradox-note">
-                  <span className="eyebrow">THE ASIAN WOMAN PARADOX</span>
+                  <span className="eyebrow">THE DESSERT EXCEPTION</span>
                   <p>
-                    One may be deeply interested and deeply stressed at the same
-                    time. The contradiction belongs entirely to Jack.
+                    Being full is a temporary opinion. The dessert menu is new evidence.
                   </p>
                 </div>
-                <p className="fine-print">
-                  No women were consulted in the formation of this theology.
-                  They have other things to do.
-                </p>
               </div>
             </div>
             <div className="stress-footnote">
@@ -175,13 +169,13 @@ export default function Home() {
               <p>
                 He preaches rest.
                 <br />
-                He stresses about girls and work.
+                Work keeps filing an objection.
               </p>
-              <span>The doctrine remains a work in progress.</span>
+              <span>The matter is adjourned for lunch.</span>
             </div>
           </div>
         </section>
-        <section id="msc" className="paper section contracts">
+        <section id="shipping" className="paper section contracts">
           <div className="container">
             <div className="section-heading">
               <div>
@@ -405,8 +399,8 @@ export default function Home() {
                 is <em>thy soul?</em>
               </h2>
               <p className="body-copy">
-                There is work. There is worrying about girls. And then there is
-                the radical possibility of doing neither for a moment.
+                Close the inbox. Finish the snack. Sit down with the authority
+                of someone whose calendar says unavailable.
               </p>
               <p className="body-copy">
                 Move the Restfulness Index to discover your current standing
@@ -483,7 +477,7 @@ export default function Home() {
             </a>
             <nav aria-label="Footer navigation">
               <a href="#gospel">The Gospel</a>
-              <a href="#msc">The Contract</a>
+              <a href="#shipping">The Contract</a>
               <a href="#tempe">Tempe</a>
               <a href="#anime">Anime</a>
               <a href="#rest">Receive Rest</a>

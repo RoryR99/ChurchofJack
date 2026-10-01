@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ArrowDown, ArrowUpRight, BookOpen, Menu, X } from "lucide-react";
-import { images } from "@/data/church";
+import { images, sayings } from "@/data/church";
 export function Seal({ small = false }: { small?: boolean }) {
   return (
     <span className={`seal ${small ? "small" : ""}`} aria-hidden="true">
@@ -74,7 +74,7 @@ export function Hero() {
         <p className="hero-description">
           From Trinidad to the distant lands of Tempe.
           <br />
-          One man. Five sayings. An unreasonable amount of theology.
+          One man. {sayings.length} sayings. An unreasonable amount of theology.
         </p>
         <div className="hero-actions">
           <a className="button gold" href="#gospel">

@@ -3,9 +3,9 @@ export const jack = {
   name: "Javan Jack",
   home: "Trinidad & Tobago",
   residence: "Tempe, Arizona",
-  job: "Contracts Specialist at MSC Shipping",
+  job: "Contracts Specialist at an anonymous shipping company",
   interests: ["Anime", "Manga", "Chainsaw Man"],
-  stresses: ["Girls", "Work"],
+  stresses: ["Work"],
 };
 export const sayings = [
   {
@@ -15,7 +15,7 @@ export const sayings = [
     theme: "Rest",
     interpretations: [
       "The foundational doctrine: enough is enough. Even if the contract has an appendix.",
-      "A universal instruction, awaiting implementation by the man stressed about girls and work.",
+      "A universal instruction. Implementation pending one last work email.",
     ],
   },
   {
@@ -56,6 +56,36 @@ export const sayings = [
     interpretations: [
       "Rest, with the full weight of conviction. Half-hearted relaxation shall not suffice.",
       "Let the contracts wait and the overthinking cease. Rocking back is now the entire agenda.",
+    ],
+  },
+  {
+    numeral: "VI",
+    title: "The Amendment of All Things",
+    quote: "Things always changing",
+    theme: "Change",
+    interpretations: [
+      "Nothing is permanent. Especially the document you just finished reviewing.",
+      "The universe has issued another amendment. No tracked changes attached.",
+    ],
+  },
+  {
+    numeral: "VII",
+    title: "The Unseen Truth",
+    quote: "I can't see the back of my head",
+    theme: "Perspective",
+    interpretations: [
+      "Even wisdom has a blind spot. This one requires a second mirror.",
+      "A profound limit of human knowledge. Also a difficult selfie angle.",
+    ],
+  },
+  {
+    numeral: "VIII",
+    title: "The Transatlantic Weekend",
+    quote: "Sadderday",
+    theme: "Observance",
+    interpretations: [
+      "Saturday, with a super USA accent. The weekend has cleared US customs.",
+      "Saturday, with a super USA accent. Same day off. Different jurisdiction.",
     ],
   },
 ] as const;

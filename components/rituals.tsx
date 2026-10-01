@@ -58,7 +58,7 @@ const stages = [
   { name: "Resting", text: "For this brief moment, the appendix can wait." },
   {
     name: "Fully Rested",
-    text: "A state the doctrine endorses. Work and girl-related overthinking may appeal.",
+    text: "Inner peace achieved. Please do not check your work email during dessert.",
   },
   { name: "Ascended", text: "Look to rest yourself." },
 ];

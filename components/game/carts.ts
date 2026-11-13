@@ -7,7 +7,7 @@ export type CartInfo = {
   title: string;
   tagline: string;
   bestKey: string;
-  icon: "jackIdle" | "pelau";
+  icon: "jackIdle" | "pelau" | "crate";
   load: () => Promise<CartFactory>;
 };
 
@@ -27,5 +27,13 @@ export const CARTS: CartInfo[] = [
     bestKey: "jack-lunch-best",
     icon: "pelau",
     load: () => import("./lunch").then((m) => m.createLunch),
+  },
+  {
+    id: "crunch",
+    title: "CONTRACT CRUNCH",
+    tagline: "MATCH THE CARGO",
+    bestKey: "jack-crunch-best",
+    icon: "crate",
+    load: () => import("./crunch").then((m) => m.createCrunch),
   },
 ];

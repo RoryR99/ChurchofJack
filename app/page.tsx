@@ -291,18 +291,19 @@ export default function Home() {
                 <b />
               </div>
               <div>
-                <span className="eyebrow">THE JACKBOY · TWO CARTRIDGES</span>
+                <span className="eyebrow">THE JACKBOY · THREE CARTRIDGES</span>
                 <h3>
-                  The commute. The lunch break.
+                  The commute. The lunch break. The paperwork.
                   <br />
-                  <em>Both, somehow, sacred.</em>
+                  <em>All of it, somehow, sacred.</em>
                 </h3>
                 <p>
                   <strong>Jack’s Commute:</strong> cross Mill Avenue and Town
                   Lake by nine, collecting matcha and strawberry kiwi vapes.{" "}
                   <strong>Second Helpings:</strong> catch the fish pelau, pork
                   and cumin and Rubbers pizza. Dodge the emails. This time the
-                  vapes hurt.
+                  vapes hurt. <strong>Contract Crunch:</strong> stack the
+                  cargo, match three, and sign before the amendments arrive.
                 </p>
                 <a className="button gold" href="/commute">
                   Play on the Jackboy <ArrowUpRight size={16} />

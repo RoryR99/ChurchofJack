@@ -5,13 +5,13 @@ import { createGfx, loadBest, runLoop } from "./gfx";
 import { CARTS } from "./carts";
 import { H, NO_INPUT, W, type CartFactory, type Input } from "./types";
 
-const ROW_Y = 50;
-const ROW_H = 26;
+const ROW_Y = 42;
+const ROW_H = 22;
 
 export const createMenu: CartFactory = (canvas, sys) => {
   const ctx = canvas.getContext("2d")!;
   const { fill, text, center } = createGfx(ctx);
-  const icons = { jackIdle: makeSprite(SPR.jackIdle), pelau: makeSprite(SPR.pelau) };
+  const icons = { jackIdle: makeSprite(SPR.jackIdle), pelau: makeSprite(SPR.pelau), crate: makeSprite(SPR.crate) };
   const heart = makeSprite(SPR.heart);
   const bests = CARTS.map((c) => loadBest(c.bestKey));
   const rows = CARTS.length + 1; // + sound toggle
@@ -56,29 +56,29 @@ export const createMenu: CartFactory = (canvas, sys) => {
 
   function render() {
     fill(0, 0, 0, W, H);
-    const logoY = Math.min(16, -16 + frame * 0.6);
+    const logoY = Math.min(12, -16 + frame * 0.6);
     center("JACKBOY", logoY, 3, 3);
     if (!booted()) {
       if (frame > 56) center("THE CHURCH OF JACK", 40, 2);
       return;
     }
-    center("CHOOSE A CARTRIDGE", 38, 2);
+    center("CHOOSE A CARTRIDGE", 31, 2);
     CARTS.forEach((c, i) => {
       const y = ROW_Y + i * ROW_H;
       const on = cursor === i;
       // Cartridge
-      fill(3, 18, y, 20, 22);
+      fill(3, 18, y, 20, 20);
       fill(on ? 1 : 2, 20, y + 2, 16, 13);
       const ic = icons[c.icon];
       ctx.drawImage(ic, 28 - Math.floor(ic.width / 2), y + 3 + Math.floor((12 - ic.height) / 2), ic.width, Math.min(12, ic.height));
-      fill(2, 22, y + 17, 12, 2);
-      text(c.title, 44, y + 3, 3);
-      text(c.tagline, 44, y + 10, 2);
-      text(`BEST ${String(bests[i]).padStart(6, "0")}`, 44, y + 17, on ? 3 : 1);
+      fill(2, 22, y + 16, 12, 2);
+      text(c.title, 44, y + 2, 3);
+      text(c.tagline, 44, y + 8, 2);
+      text(`BEST ${String(bests[i]).padStart(6, "0")}`, 44, y + 14, on ? 3 : 1);
     });
-    const sy = ROW_Y + CARTS.length * ROW_H + 4;
+    const sy = ROW_Y + CARTS.length * ROW_H + 2;
     text(`SOUND: ${sys.isMuted() ? "OFF" : "ON"}`, 44, sy, 3);
-    const cy = cursor < CARTS.length ? ROW_Y + cursor * ROW_H + 8 : sy;
+    const cy = cursor < CARTS.length ? ROW_Y + cursor * ROW_H + 7 : sy;
     ctx.drawImage(heart, 6, cy);
     center("A: PLAY   SELECT: MENU", H - 9, 2);
   }
@@ -116,7 +116,7 @@ export const createMenu: CartFactory = (canvas, sys) => {
           return choose(i);
         }
       }
-      const sy = ROW_Y + CARTS.length * ROW_H + 4;
+      const sy = ROW_Y + CARTS.length * ROW_H + 2;
       if (y >= sy - 4 && y < sy + 10) choose(CARTS.length);
     },
     destroy() {

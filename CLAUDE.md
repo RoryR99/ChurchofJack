@@ -36,8 +36,8 @@ node scripts/prepare-images.mjs  # re-encode public/images/*.jpg → .webp after
   - `JackBoy.tsx` owns input and the current `Cartridge` (`types.ts`: `setInput`, `tap(x, y)` in game coordinates, `destroy`). `boot(id)` swaps cartridges; Select returns to `menu.ts`.
   - Games are registered in `carts.ts` and loaded with a dynamic `import()`, so each is its own chunk. A new game is a `CartFactory` module plus a registry entry.
   - Each game owns its state and calls `runLoop` from `gfx.ts`. Use `createGfx` for text and panels. The 3×5 font in `sprites.ts` is uppercase only, and `*` draws a heart: add a glyph there if you need a new character.
-  - `commute.ts` uses `level.ts`; tiles are 8px, and `GROUND` is the sidewalk row. `lunch.ts` is the break-room catcher.
-- To playtest, use the dev-only hooks `window.__menu`, `__jack` and `__lunch` (`set({...})`, `tick(n)`; `__lunch.spawn(kind, x, y)` and `quiet()`). The Claude browser pane throttles `requestAnimationFrame` when hidden, so step frames manually instead of relying on timeouts.
+  - `commute.ts` uses `level.ts`; tiles are 8px, and `GROUND` is the sidewalk row. `lunch.ts` is the break-room catcher. `crunch.ts` is the match-3 falling-pairs puzzle (cell codes 1–4 cargo, 5 contract, 6 junk).
+- To playtest, use the dev-only hooks `window.__menu`, `__jack`, `__lunch` and `__crunch` (`set({...})`, `tick(n)`; `__lunch.spawn(kind, x, y)` and `quiet()`; `__crunch.grid`, `force(a, b, x, r)`). The Claude browser pane throttles `requestAnimationFrame` when hidden, so step frames manually instead of relying on timeouts.
 
 ## Content guardrails (from the README — important)
 

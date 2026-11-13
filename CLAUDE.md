@@ -32,14 +32,18 @@ node scripts/prepare-images.mjs  # re-encode public/images/*.jpg → .webp after
 - `data/disciples.ts` is a typed registry rendered automatically by the page; it is intentionally empty.
 - Styling: Tailwind is imported in `app/globals.css`, but most visual design (green/gold/parchment theme via CSS variables on `:root`, responsive layout, image crops, reduced-motion) lives as hand-written classes in `globals.css`. Hero/thumbnail framing is done with CSS crops — source images are never cropped.
 - `@/*` path alias maps to the repo root.
-- **`/commute` game** (`app/commute/page.tsx`, `components/game/`): a self-contained canvas platformer with no dependencies. `engine.ts` holds all game logic and rendering at 160×144 in a 4-shade palette. `level.ts` builds the tile grid and entities from helper calls; tile rows are 8px and `GROUND` is the sidewalk row. `JackBoy.tsx` maps keys and pointers to `Input`; touch tracks each pointer by the `[data-btn]` element under it, so thumbs can slide between buttons. All in-game text uses the 3×5 font in `sprites.ts`, which is uppercase only: add a glyph there if you use a new character.
-- To playtest, use the dev-only `window.__jack` hook (`set({right:true})`, `tick(n)`, `p`, `state`, `hearts`). The Claude browser pane throttles `requestAnimationFrame` when hidden, so step frames manually instead of relying on timeouts.
+- **`/commute`, the Jackboy** (`app/commute/page.tsx`, `components/game/`): a canvas console with swappable cartridges and no dependencies.
+  - `JackBoy.tsx` owns input and the current `Cartridge` (`types.ts`: `setInput`, `tap(x, y)` in game coordinates, `destroy`). `boot(id)` swaps cartridges; Select returns to `menu.ts`.
+  - Games are registered in `carts.ts` and loaded with a dynamic `import()`, so each is its own chunk. A new game is a `CartFactory` module plus a registry entry.
+  - Each game owns its state and calls `runLoop` from `gfx.ts`. Use `createGfx` for text and panels. The 3×5 font in `sprites.ts` is uppercase only, and `*` draws a heart: add a glyph there if you need a new character.
+  - `commute.ts` uses `level.ts`; tiles are 8px, and `GROUND` is the sidewalk row. `lunch.ts` is the break-room catcher.
+- To playtest, use the dev-only hooks `window.__menu`, `__jack` and `__lunch` (`set({...})`, `tick(n)`; `__lunch.spawn(kind, x, y)` and `quiet()`). The Claude browser pane throttles `requestAnimationFrame` when hidden, so step frames manually instead of relying on timeouts.
 
 ## Content guardrails (from the README — important)
 
 - Only the supplied facts in `data/church.ts` and the **eight exact sayings** count as information about Javan. Do not add or alter quotes, and do not invent dates, dating encounters, named friends, employer policies, or other personal details.
 - Only add disciples whose names/details the user has supplied or approved.
-- The game's matcha, strawberry kiwi vapes and "hopeful admirer" enemies were requested by the user. Admirers can only be dodged, never attacked. Jack's in-game lines come from the eight sayings.
+- Game content the user requested: matcha, strawberry kiwi vapes (helpful in the commute, harmful in Second Helpings), fish pelau, pork and cumin, Rubbers pizza, and "hopeful admirer" enemies. Admirers can only be dodged, never attacked. Jack's in-game lines come from the eight sayings.
 - Public copy stays in character: no parody/affiliation disclaimers on the site.
 - The Word of Jack generator must use only the eight sayings and never repeat the same quote consecutively.
 - Preserve the accessibility features: skip link, mobile nav, visible focus, reduced-motion support, keyboard support on the slider (arrows/Home/End), and the gallery dialog's focus containment/restoration, Escape, and arrow-key navigation.

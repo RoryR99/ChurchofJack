@@ -22,23 +22,27 @@ Open http://127.0.0.1:3000. `npm run build` creates the production static site i
 - `data/disciples.ts`: typed disciple registry. Add approved names and optional `churchTitle`, `image`, `quote`, `rank`, `description`; entries render automatically. It is intentionally empty.
 - `public/images/`: delivery images, with original JPEG copies retained.
 - `scripts/prepare-images.mjs`: WebP compression from the original JPEGs (run with `node scripts/prepare-images.mjs` when replacing assets).
-- `app/commute/page.tsx` + `components/game/`: **Jack's Commute**, a Game Boy-style platformer (see below).
+- `app/commute/page.tsx` + `components/game/`: **the Jackboy**, a Game Boy-style console with two games (see below).
 - `.openai/hosting.json`: private Sites identity and static output configuration.
 
-## Jack's Commute (`/commute`)
+## The Jackboy (`/commute`)
 
-A dependency-free 2D platformer on one 160×144 canvas, scaled with `image-rendering: pixelated` inside a "Jackboy" console shell. Jack walks from his apartment through Mill Ave and Tempe Town Lake to the shipping office and must clock in before 9:00. Matcha gives a speed and jump boost. Strawberry kiwi vapes give a cloud that makes admirers wander off and protects Jack from damage. Admirers and cacti cost a heart, benches are checkpoints that restore one, and each completed day repeats faster.
+A dependency-free, Game Boy-style console with two cartridges. Each game draws on one 160×144 canvas scaled with `image-rendering: pixelated`. On power-up a cartridge menu lists both games and their best scores; Select (Esc) returns to it, and `/commute?game=lunch` or `?game=commute` opens a game directly. Tapping the SOUND LED or pressing M mutes.
 
-- `engine.ts`: game loop (fixed 60 Hz), physics, collisions, rendering, HUD and menus. Plain TypeScript with no React.
-- `level.ts`: the level, built from helpers (`ground`, `plat`, `block`, `water`, `admirer`, …). Edit it to change the layout.
-- `sprites.ts`: palette-indexed string sprites and the 3×5 pixel font.
-- `audio.ts`: WebAudio bleeps. `JackBoy.tsx`: the console shell plus keyboard and multi-touch input.
-- Controls: D-pad/arrows to move, A/Z/Space to jump, B/X to run, Start/Enter to pause, Select/M to mute. The best score is saved in `localStorage`.
-- In development only, `window.__jack` exposes `set(input)` and `tick(n)` for deterministic playtesting (the browser throttles `requestAnimationFrame` in hidden panes).
+- **Jack's Commute:** Jack walks from his apartment through Mill Ave and Tempe Town Lake to the shipping office and must clock in before 9:00. Matcha gives a speed and jump boost. Strawberry kiwi vapes give a cloud that makes admirers wander off. Admirers and cacti cost a heart, benches are checkpoints, and each completed day repeats faster.
+- **Second Helpings:** a lunch-break catcher in the office break room. Catch fish pelau (points, but a food coma slows Jack), pork and cumin (a "cumin kick" doubles points), Rubbers pizza (bounces once, so catch it twice), matcha (restores Rest) and cake (the Dessert Exception turns hazards into cake). Dodge emails, reply-alls that split into three, zigzagging amendments, ringing phones, a "Lunch together?" admirer and, this time, vapes, which drain Rest and fog the screen. Consecutive catches build a helping combo, every 10 foods earns a nap (A) that clears hazards, and the run ends when Rest hits 0.
+
+Code in `components/game/`:
+- `JackBoy.tsx`: the console shell, keyboard and multi-touch input, and cartridge swapping.
+- `carts.ts`: the cartridge registry. Each game is loaded with a dynamic `import()`, so it ships as its own chunk. **To add a game,** write a `CartFactory` module (see `types.ts`) and register it here.
+- `menu.ts`: boot screen and cartridge picker.
+- `commute.ts` + `level.ts`, and `lunch.ts`: the two games.
+- `gfx.ts`: shared drawing helpers (pixel font, panels, speech bubbles), the Tempe Butte backdrop, the fixed 60 Hz `runLoop`, best-score storage and `buzz` vibration. `sprites.ts`: palette-indexed string sprites and the 3×5 font. `audio.ts`: WebAudio bleeps.
+- In development only, `window.__menu`, `window.__jack` and `window.__lunch` expose `set(input)` and `tick(n)` for deterministic playtesting (the browser throttles `requestAnimationFrame` in hidden panes). `__lunch` also has `spawn(kind, x, y)`, `spawnAdmirer()` and `quiet()`.
 
 ## Content guardrails
 
-Only the supplied facts (plus his love of matcha and strawberry kiwi vapes, supplied for the game) and the eight sayings are treated as information about Javan. Scripture analysis, titles, bureaucratic rituals and religious framing are fictional. Apart from the game's admirers, which were requested, no dates, dating encounters, named friends, additional personal quotes or employer policies have been invented. The images are supplied stylized artwork, not documentation of real events. The public copy stays in character, without parody or affiliation notices, as requested.
+Only the supplied facts (plus the game details the user supplied: matcha, strawberry kiwi vapes, fish pelau, pork and cumin, and Rubbers pizza) and the eight sayings are treated as information about Javan. Scripture analysis, titles, bureaucratic rituals and religious framing are fictional. Apart from the game's admirers, which were requested, no dates, dating encounters, named friends, additional personal quotes or employer policies have been invented. The images are supplied stylized artwork, not documentation of real events. The public copy stays in character, without parody or affiliation notices, as requested.
 
 ## Interactions and accessibility
 

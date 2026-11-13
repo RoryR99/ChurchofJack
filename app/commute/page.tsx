@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { JackBoy } from "@/components/game/JackBoy";
 
 export const metadata: Metadata = {
-  title: "Jack's Commute | The Church of Jack",
+  title: "Jackboy | The Church of Jack",
   description:
-    "Guide Jack through Tempe to work by 9:00. Collect matcha and strawberry kiwi vapes. Dodge the admirers. Look to rest yourself.",
+    "Two cartridges on the Jackboy. Jack's Commute: get through Tempe to work by 9:00. Second Helpings: survive the lunch break. Look to rest yourself.",
 };
 
 export const viewport: Viewport = {
@@ -23,10 +23,11 @@ export default function CommutePage() {
       <JackBoy />
       <p className="jackboy-help">
         <span>D-pad / arrows: move</span>
-        <span>A / Z / Space: jump</span>
-        <span>B / X: hold to run</span>
+        <span>A / Z / Space: jump · nap</span>
+        <span>B / X: run · dash</span>
         <span>Start / Enter: pause</span>
-        <span>Select / M: mute</span>
+        <span>Select / Esc: cartridge menu</span>
+        <span>M or the LED: mute</span>
       </p>
     </main>
   );

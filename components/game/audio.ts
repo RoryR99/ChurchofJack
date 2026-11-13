@@ -42,4 +42,6 @@ export const sfx = {
   win: () => arp([523, 659, 784, 1047], 0.12),
   over: () => arp([392, 330, 262], 0.18, "triangle"),
   blip: () => tone(660, 0.04),
+  combo: (n: number) => tone(440 + n * 110, 0.08),
+  boing: () => tone(180, 0.18, "triangle", 520),
 };

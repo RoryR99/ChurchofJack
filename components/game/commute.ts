@@ -1,10 +1,8 @@
-import { FONT, PAL, SPR, makeSprite } from "./sprites";
+import { PAL, SPR, makeSprite } from "./sprites";
 import { COLS, GROUND, ROWS, T, TILE, buildLevel, type Ent } from "./level";
 import { sfx } from "./audio";
-
-export const W = 160;
-export const H = 144;
-export type Input = { left: boolean; right: boolean; jump: boolean; run: boolean; start: boolean };
+import { buildButte, buzz, createGfx, loadBest, runLoop, saveBest as storeBest, strip } from "./gfx";
+import { H, NO_INPUT, W, type CartFactory, type Input } from "./types";
 
 type State = "title" | "play" | "pause" | "over" | "win";
 type Admirer = { x: number; y: number; dir: number; face: number; chase: boolean; variant: number; line: number; fleeing: boolean; cool: number };
@@ -18,9 +16,9 @@ const LEVEL = buildLevel();
 const PW = 8; // player hitbox
 const PH = 13;
 
-export function createGame(canvas: HTMLCanvasElement) {
+export const createCommute: CartFactory = (canvas) => {
   const ctx = canvas.getContext("2d")!;
-  ctx.imageSmoothingEnabled = false;
+  const { fill, text, textW, center, panel, bubble, disc } = createGfx(ctx);
 
   // Sprites (right-facing and flipped)
   const spr = (rows: string[], remap?: Record<string, string>) => [makeSprite(rows, remap), makeSprite(rows, remap, true)];
@@ -47,21 +45,19 @@ export function createGame(canvas: HTMLCanvasElement) {
     [T.WATERTOP]: makeSprite(SPR.waterTop),
     [T.WATER]: makeSprite(SPR.water),
   };
-  const far = buildFar();
+  const far = buildButte(GROUND * TILE);
   const mid = buildMid();
 
   // State
-  let input: Input = { left: false, right: false, jump: false, run: false, start: false };
+  let input: Input = { ...NO_INPUT };
+  const jumpHeld = () => input.a || input.up;
   let prev = { ...input };
   let state: State = "title";
   let stateT = 0;
   let frame = 0;
   let day = 1;
   let score = 0;
-  let best = 0;
-  try {
-    best = Number(localStorage.getItem(BEST_KEY)) || 0;
-  } catch {}
+  let best = loadBest(BEST_KEY);
   const p = { x: LEVEL.start.x, y: LEVEL.start.y, vx: 0, vy: 0, face: 1, onGround: false, coyote: 0, buffer: 0, inv: 0, hurtT: 0 };
   let hearts = 3;
   let caff = 0;
@@ -115,9 +111,7 @@ export function createGame(canvas: HTMLCanvasElement) {
   function saveBest() {
     if (score > best) {
       best = score;
-      try {
-        localStorage.setItem(BEST_KEY, String(best));
-      } catch {}
+      storeBest(BEST_KEY, best);
     }
   }
 
@@ -146,18 +140,14 @@ export function createGame(canvas: HTMLCanvasElement) {
     p.vy = -2.6;
     say = { text: "WHAT.", t: 90 };
     sfx.hit();
-    try {
-      navigator.vibrate?.(60);
-    } catch {}
+    buzz(60);
     if (hearts <= 0) gameOver("tired");
   }
 
   function fall() {
     hearts--;
     sfx.hit();
-    try {
-      navigator.vibrate?.(60);
-    } catch {}
+    buzz(60);
     if (hearts <= 0) return gameOver("tired");
     Object.assign(p, { x: checkpoint.x, y: checkpoint.y, vx: 0, vy: 0, inv: 90, hurtT: 0 });
     say = { text: "SAY THAT AGAIN PLEASE.", t: 120 };
@@ -182,7 +172,7 @@ export function createGame(canvas: HTMLCanvasElement) {
 
     // Player movement
     const dir = (input.right ? 1 : 0) - (input.left ? 1 : 0);
-    const max = (input.run ? 1.6 : 1) * (caff > 0 ? 1.3 : 1);
+    const max = (input.b ? 1.6 : 1) * (caff > 0 ? 1.3 : 1);
     if (p.hurtT > 0) p.hurtT--;
     else if (dir) {
       p.vx += dir * (p.onGround ? 0.15 : 0.1);
@@ -200,7 +190,7 @@ export function createGame(canvas: HTMLCanvasElement) {
       p.buffer = p.coyote = 0;
       sfx.jump();
     }
-    if (!input.jump && p.vy < -1.6) p.vy = -1.6;
+    if (!jumpHeld() && p.vy < -1.6) p.vy = -1.6;
     p.vy = Math.min(4, p.vy + 0.25);
 
     // X collision
@@ -322,7 +312,7 @@ export function createGame(canvas: HTMLCanvasElement) {
   function update() {
     frame++;
     stateT++;
-    const jumpPressed = input.jump && !prev.jump;
+    const jumpPressed = jumpHeld() && !(prev.a || prev.up);
     const startPressed = input.start && !prev.start;
     prev = { ...input };
     if (state === "title") {
@@ -344,50 +334,9 @@ export function createGame(canvas: HTMLCanvasElement) {
   }
 
   // ---------- Rendering ----------
-  const fill = (c: number, x: number, y: number, w: number, h: number) => {
-    ctx.fillStyle = PAL[c];
-    ctx.fillRect(x, y, w, h);
-  };
-
-  function text(str: string, x: number, y: number, c = 3, s = 1) {
-    ctx.fillStyle = PAL[c];
-    let cx = Math.round(x);
-    for (const ch of str.toUpperCase()) {
-      const g = FONT[ch] ?? FONT["?"];
-      for (let r = 0; r < 5; r++) {
-        const bits = +g[r];
-        for (let b = 0; b < 3; b++) if (bits & (4 >> b)) ctx.fillRect(cx + b * s, Math.round(y) + r * s, s, s);
-      }
-      cx += 4 * s;
-    }
-  }
-  const textW = (str: string, s = 1) => str.length * 4 * s - s;
-  const center = (str: string, y: number, c = 3, s = 1) => text(str, Math.floor((W - textW(str, s)) / 2), y, c, s);
-
-  function bubble(str: string, cx: number, by: number, heart = false) {
-    const w = textW(str) + (heart ? 12 : 6);
-    const x = Math.max(1, Math.min(W - w - 1, Math.round(cx - w / 2)));
-    const y = Math.max(13, by - 11);
-    fill(3, x, y, w, 9);
-    fill(0, x + 1, y + 1, w - 2, 7);
-    fill(0, Math.round(cx) - 1, y + 9, 3, 1);
-    fill(3, Math.round(cx), y + 9, 1, 2);
-    if (heart) {
-      ctx.drawImage(img.heart, x + 2, y + 2, 7, 6);
-      text(str, x + 10, y + 2);
-    } else text(str, x + 3, y + 2);
-  }
-
-  function panel(x: number, y: number, w: number, h: number) {
-    fill(3, x, y, w, h);
-    fill(0, x + 1, y + 1, w - 2, h - 2);
-    fill(2, x + 2, y + 2, w - 4, 1);
-    fill(2, x + 2, y + h - 3, w - 4, 1);
-  }
-
   function drawWorld() {
     fill(0, 0, 0, W, H);
-    disc(ctx, 128, 34, 11, 1);
+    disc(128, 34, 11, 1);
     tileStrip(far, cam * 0.2);
     tileStrip(mid, cam * 0.5);
     // Light rail passing in the distance
@@ -460,7 +409,7 @@ export function createGame(canvas: HTMLCanvasElement) {
       if (state === "play" && dx < 44 && Math.abs(p.y - a.y) < 32) {
         const by = say.t > 0 ? Math.min(a.y, p.y) - 13 : a.y; // stack above Jack's own bubble
         if (a.fleeing) bubble("OK BYE", sx + 4, by);
-        else bubble(LINES[a.line], sx + 4, by, true);
+        else bubble(LINES[a.line], sx + 4, by, img.heart);
       }
     }
 
@@ -474,7 +423,7 @@ export function createGame(canvas: HTMLCanvasElement) {
     }
     if (!(p.inv > 0 && Math.floor(p.inv / 4) % 2)) {
       const moving = Math.abs(p.vx) > 0.1;
-      const walkF = Math.floor(frame / (input.run ? 5 : 8)) % 2;
+      const walkF = Math.floor(frame / (input.b ? 5 : 8)) % 2;
       const set = !p.onGround && state === "play" ? jack.jump : moving ? (walkF ? jack.w1 : jack.w2) : jack.idle;
       ctx.drawImage(set[p.face > 0 ? 0 : 1], px - 1, py - 1);
     }
@@ -483,8 +432,8 @@ export function createGame(canvas: HTMLCanvasElement) {
         const a = frame * 0.08 + i * 2.09;
         const cx = px + 4 + Math.round(Math.cos(a) * 10);
         const cy = py + 7 + Math.round(Math.sin(a) * 7);
-        disc(ctx, cx, cy, 3, 1);
-        disc(ctx, cx, cy, 2, 0);
+        disc(cx, cy, 3, 1);
+        disc(cx, cy, 2, 0);
       }
     }
     if (say.t > 0 && state === "play") bubble(say.text, px + 4, py - 2);
@@ -562,31 +511,9 @@ export function createGame(canvas: HTMLCanvasElement) {
     if (strip.width - o < W) ctx.drawImage(strip, strip.width - o, 0);
   }
 
-  // ---------- Loop ----------
-  let raf = 0;
-  let last = performance.now();
-  let acc = 0;
-  const STEP = 1000 / 60;
-  function loop(now: number) {
-    acc += Math.min(100, now - last);
-    last = now;
-    while (acc >= STEP) {
-      update();
-      acc -= STEP;
-    }
-    render();
-    raf = requestAnimationFrame(loop);
-  }
-  raf = requestAnimationFrame(loop);
-
-  const pause = () => {
+  const stop = runLoop(update, render, () => {
     if (state === "play") setState("pause");
-  };
-  const onVis = () => {
-    if (document.hidden) pause();
-  };
-  document.addEventListener("visibilitychange", onVis);
-  window.addEventListener("blur", pause);
+  });
 
   if (process.env.NODE_ENV !== "production") {
     (window as unknown as Record<string, unknown>).__jack = {
@@ -619,54 +546,12 @@ export function createGame(canvas: HTMLCanvasElement) {
       else if (state === "win" && stateT > 40) startDay(day + 1);
     },
     destroy() {
-      cancelAnimationFrame(raf);
-      document.removeEventListener("visibilitychange", onVis);
-      window.removeEventListener("blur", pause);
+      stop();
     },
   };
-}
-
-export type Game = ReturnType<typeof createGame>;
+};
 
 // ---------- Background art ----------
-function disc(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number, c: number) {
-  ctx.fillStyle = PAL[c];
-  for (let dy = -r; dy <= r; dy++) {
-    const hw = Math.floor(Math.sqrt(r * r - dy * dy));
-    ctx.fillRect(cx - hw, cy + dy, hw * 2 + 1, 1);
-  }
-}
-
-function strip(w: number) {
-  const c = document.createElement("canvas");
-  c.width = w;
-  c.height = H;
-  return [c, c.getContext("2d")!] as const;
-}
-
-// Tempe Butte ("A" Mountain) and the desert hills
-function buildFar() {
-  const [c, x] = strip(320);
-  x.fillStyle = PAL[1];
-  for (let i = 0; i < 320; i++) {
-    const butte = 46 * Math.max(0, 1 - Math.abs(i - 110) / 70) ** 0.8;
-    const hills = 10 + 6 * Math.sin(i / 23) + 4 * Math.sin(i / 9 + 1);
-    const h = Math.round(Math.max(butte, hills));
-    x.fillRect(i, GROUND * TILE - h, 1, h);
-  }
-  // The "A"
-  x.fillStyle = PAL[0];
-  const ax = 106;
-  const ay = 84;
-  [
-    [1, 0, 2, 1],
-    [0, 1, 1, 5],
-    [3, 1, 1, 5],
-    [1, 3, 2, 1],
-  ].forEach(([dx, dy, w, h]) => x.fillRect(ax + dx * 2, ay + dy * 2, w * 2, h * 2));
-  return c;
-}
-
 // Saguaros and palms
 function buildMid() {
   const [c, x] = strip(256);

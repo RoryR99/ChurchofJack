@@ -291,19 +291,21 @@ export default function Home() {
                 <b />
               </div>
               <div>
-                <span className="eyebrow">THE DAILY PILGRIMAGE</span>
+                <span className="eyebrow">THE JACKBOY · TWO CARTRIDGES</span>
                 <h3>
-                  Tempe. 8:30 AM.
+                  The commute. The lunch break.
                   <br />
-                  <em>Work begins at nine.</em>
+                  <em>Both, somehow, sacred.</em>
                 </h3>
                 <p>
-                  Guide the Jack across Mill Avenue and Town Lake. Collect
-                  matcha and strawberry kiwi vapes. Politely avoid the
-                  admirers. Rest on every bench.
+                  <strong>Jack’s Commute:</strong> cross Mill Avenue and Town
+                  Lake by nine, collecting matcha and strawberry kiwi vapes.{" "}
+                  <strong>Second Helpings:</strong> catch the fish pelau, pork
+                  and cumin and Rubbers pizza. Dodge the emails. This time the
+                  vapes hurt.
                 </p>
                 <a className="button gold" href="/commute">
-                  Play Jack’s Commute <ArrowUpRight size={16} />
+                  Play on the Jackboy <ArrowUpRight size={16} />
                 </a>
               </div>
             </div>

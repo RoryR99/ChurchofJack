@@ -2489,6 +2489,10 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
 }
 .jackboy-led {
+  border: 0;
+  background: none;
+  padding: 4px 0;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;

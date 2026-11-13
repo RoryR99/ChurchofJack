@@ -44,6 +44,9 @@ export function Header() {
             {label}
           </a>
         ))}
+        <a href="/commute" onClick={() => setOpen(false)}>
+          Play
+        </a>
         <a className="nav-rest" href="#rest" onClick={() => setOpen(false)}>
           Receive Rest <ArrowUpRight size={15} />
         </a>

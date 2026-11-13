@@ -1,0 +1,47 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this is
+
+"The Church of Jack": a single-page, affectionate parody site about a real person (Javan Jack). Next.js 15 App Router + React 19 + TypeScript + Tailwind v4 + `lucide-react`. It is a **static export** — no backend, database, auth, or API routes.
+
+## Commands
+
+```sh
+npm install
+npm run dev        # next dev on http://127.0.0.1:3000 (bound to 127.0.0.1, not localhost)
+npm run build      # static export to out/
+npm run typecheck  # tsc --noEmit — the only automated check; there is no linter or test suite
+node scripts/prepare-images.mjs  # re-encode public/images/*.jpg → .webp after replacing images
+```
+
+`next start` does not work (`output: "export"`); serve `out/` with any static server to preview a production build. `prepare-images.mjs` imports `sharp`, which is not a declared dependency (it currently resolves transitively through Next).
+
+## Build quirks
+
+- `next.config.ts` sets `distDir` to `.next-dev` in development and `.next` for builds, so dev and build can run without clobbering each other. Both, plus `out/` and `artifacts/`, are gitignored.
+- `images.unoptimized: true` (required for static export); images are plain `.webp` files served from `public/images/`.
+- `.openai/hosting.json` points the hosting provider at `out/` — keep the export directory as `out`.
+
+## Architecture
+
+- `app/page.tsx` is a server component that composes every section and holds most of the editorial/parody copy inline.
+- `components/church.tsx` (header, hero, chapter headings, seal) and `components/rituals.tsx` (interactive pieces: scripture generator, rest slider, local-only confession, gallery `<dialog>`, keyboard Easter eggs `WHAT`/`REST`) are both `"use client"`.
+- `data/church.ts` is the single source of content: `jack` facts, the eight `sayings` (each with interpretations), `images` (gallery/hero config incl. alt text), and `observances`. Components render from this data rather than hardcoding it.
+- `data/disciples.ts` is a typed registry rendered automatically by the page; it is intentionally empty.
+- Styling: Tailwind is imported in `app/globals.css`, but most visual design (green/gold/parchment theme via CSS variables on `:root`, responsive layout, image crops, reduced-motion) lives as hand-written classes in `globals.css`. Hero/thumbnail framing is done with CSS crops — source images are never cropped.
+- `@/*` path alias maps to the repo root.
+- **`/commute` game** (`app/commute/page.tsx`, `components/game/`): a self-contained canvas platformer with no dependencies. `engine.ts` holds all game logic and rendering at 160×144 in a 4-shade palette. `level.ts` builds the tile grid and entities from helper calls; tile rows are 8px and `GROUND` is the sidewalk row. `JackBoy.tsx` maps keys and pointers to `Input`; touch tracks each pointer by the `[data-btn]` element under it, so thumbs can slide between buttons. All in-game text uses the 3×5 font in `sprites.ts`, which is uppercase only: add a glyph there if you use a new character.
+- To playtest, use the dev-only `window.__jack` hook (`set({right:true})`, `tick(n)`, `p`, `state`, `hearts`). The Claude browser pane throttles `requestAnimationFrame` when hidden, so step frames manually instead of relying on timeouts.
+
+## Content guardrails (from the README — important)
+
+- Only the supplied facts in `data/church.ts` and the **eight exact sayings** count as information about Javan. Do not add or alter quotes, and do not invent dates, dating encounters, named friends, employer policies, or other personal details.
+- Only add disciples whose names/details the user has supplied or approved.
+- The game's matcha, strawberry kiwi vapes and "hopeful admirer" enemies were requested by the user. Admirers can only be dodged, never attacked. Jack's in-game lines come from the eight sayings.
+- Public copy stays in character: no parody/affiliation disclaimers on the site.
+- The Word of Jack generator must use only the eight sayings and never repeat the same quote consecutively.
+- Preserve the accessibility features: skip link, mobile nav, visible focus, reduced-motion support, keyboard support on the slider (arrows/Home/End), and the gallery dialog's focus containment/restoration, Escape, and arrow-key navigation.
+- The confession form is local only; nothing is transmitted or stored.
+- Original 704×1524 portrait JPEGs (`Gemini_Generated_Image_*.jpg`) stay in the repo root; `public/images/` keeps both `.jpg` and `.webp` copies.

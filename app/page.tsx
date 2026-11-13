@@ -284,6 +284,29 @@ export default function Home() {
                 FROM THE DISCIPLES TO HIS RESTFULNESS
               </span>
             </div>
+            <div id="commute" className="commute-teaser">
+              <div className="mini-boy" aria-hidden="true">
+                <span />
+                <i />
+                <b />
+              </div>
+              <div>
+                <span className="eyebrow">THE DAILY PILGRIMAGE</span>
+                <h3>
+                  Tempe. 8:30 AM.
+                  <br />
+                  <em>Work begins at nine.</em>
+                </h3>
+                <p>
+                  Guide the Jack across Mill Avenue and Town Lake. Collect
+                  matcha and strawberry kiwi vapes. Politely avoid the
+                  admirers. Rest on every bench.
+                </p>
+                <a className="button gold" href="/commute">
+                  Play Jack’s Commute <ArrowUpRight size={16} />
+                </a>
+              </div>
+            </div>
             <div id="disciples" className="disciples">
               <div>
                 <Chapter number="06">THE DISCIPLES OF TRINIDAD</Chapter>
